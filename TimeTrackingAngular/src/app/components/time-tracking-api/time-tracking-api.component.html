@@ -1,0 +1,81 @@
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Hours</th>
+    </tr>
+    <tr *ngFor="let timetrack of dataSource ">
+        <td>{{timetrack.id}}</td>
+        <td>{{timetrack.name}}</td>
+        <td>{{timetrack.date}}</td>
+        <td>{{timetrack.description}}</td>
+        <td>{{timetrack.hours}}</td>
+    </tr>
+</table>
+
+<p>Add new timetrack: </p>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Hours</th>
+    </tr>
+    <tr>
+        <td><input [(ngModel)] = "newTimeTracking.name"></td>
+        <td><input [(ngModel)] = "newTimeTracking.date"></td>
+        <td><input [(ngModel)] = "newTimeTracking.description"></td>
+        <td><input [(ngModel)] = "newTimeTracking.hours"></td>
+    </tr>
+</table>
+
+<button (click)="addTimeTracking()">Add</button>
+
+<p>Update timetrack: </p>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Hours</th>
+    </tr>
+    <tr>
+        <td><input [(ngModel)] = "updTimeTracking.id"></td>
+        <td><input [(ngModel)] = "updTimeTracking.name"></td>
+        <td><input [(ngModel)] = "updTimeTracking.date"></td>
+        <td><input [(ngModel)] = "updTimeTracking.description"></td>
+        <td><input [(ngModel)] = "updTimeTracking.hours"></td>
+    </tr>
+</table>
+
+<button (click)="updateTimeTracking(updTimeTracking)">Update</button>
+
+
+<p>Delete timetrack: </p>
+<table>
+    <tr>
+        <th>Id</th>
+    </tr>
+    <tr>
+        <td><input [(ngModel)] = "delTimeTracking.id"></td>
+    </tr>
+</table>
+
+<button (click)="deleteTimeTracking(delTimeTracking)">Delete</button>
+
+<p>Filter: </p>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Hours</th>
+    </tr>
+    <tr>
+        <td><input [(ngModel)] = "filtrTimeTracking.date"></td>
+        <td><input [(ngModel)] = "filtrTimeTracking.hours"></td>
+    </tr>
+</table>
+
+<span><button (click)="filterTimeTracking(filtrTimeTracking)">Filter</button> <button (click)="reset()">Reset</button></span>

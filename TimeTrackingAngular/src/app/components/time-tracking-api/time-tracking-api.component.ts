@@ -14,6 +14,8 @@ export class TimeTrackingApiComponent implements OnInit {
   filtrTimeTracking: TimeTracking = {};
   dataSource: TimeTracking[] = [];
 
+  displayedColumns: string[] = ['name', 'description', 'hours', 'date', 'operations'];
+
   constructor(private timeTrackingService: TimeTrackingApiService) { }
 
   ngOnInit(): void {
@@ -30,7 +32,8 @@ export class TimeTrackingApiComponent implements OnInit {
 
 addTimeTracking(){
   this.timeTrackingService.addTimeTracking(this.newTimeTracking).subscribe((timeTracking) => {
-    this.dataSource.push(timeTracking);
+    console.log('add timetr', timeTracking)
+    this.dataSource = [...this.dataSource, timeTracking];
     this.newTimeTracking = {};
   });
 
@@ -40,7 +43,7 @@ updateTimeTracking(timeTracking: TimeTracking){
   console.log('update', timeTracking)
   console.log('this.timetracking', this.dataSource)
   this.timeTrackingService.updateTimeTracking(timeTracking).subscribe(() => {
-   
+    timeTracking.isEditing = false;
     this.dataSource = this.dataSource.map((item) => (item.id == timeTracking.id ? timeTracking: item))
     this.updTimeTracking = {};
   });

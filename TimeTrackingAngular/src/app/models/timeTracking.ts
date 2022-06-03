@@ -5,4 +5,7 @@ export interface TimeTracking
     date?: string;
     description?: string;
     hours?: number;
+
+    preparingDelete?: boolean;
+    isEditing?: boolean;
 }

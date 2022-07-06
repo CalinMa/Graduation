@@ -1,0 +1,39 @@
+<form [formGroup]="RegisterForm" (ngSubmit)="registerUser()">
+    <div class="subcontainer">
+      <h2>Create a new user</h2>
+      <!--    <form fxLayoutAlign="stretch"fxLayout="column" class="login-form" >-->
+      <mat-form-field >
+        <input matInput type = "userName" placeholder="userName" formControlName="userName">
+      </mat-form-field>
+  
+  
+      <mat-form-field >
+        <input matInput type = "text" placeholder="Name" formControlName="name">
+      </mat-form-field>
+  
+      <mat-form-field >
+        <input matInput type="text" placeholder="FirstName" formControlName="firstName">
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput type="email" placeholder="Email" formControlName="email">
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput type="password" placeholder="Password" formControlName="password">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+      <mat-select matInput type="number" placeholder="Role" formControlName="roleId">
+        <mat-option  value="1">User</mat-option>
+        <mat-option *ngIf="isSuperAdmin" value="2">Admin</mat-option>
+        <mat-option *ngIf="isSuperAdmin" value="3">Super Admin</mat-option>
+      </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit">Register</button>
+
+    </div>
+
+  </form>
+  
+  
+  

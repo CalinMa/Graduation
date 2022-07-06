@@ -1,0 +1,11 @@
+<header class="background">
+<mat-toolbar>
+    <span>Activity Tracker</span>
+    <div style="flex: 1">&nbsp;</div>
+      <div *ngIf="welcomeGreetingCheck">Welcome, {{userName}}&nbsp;</div>
+      <button mat-raised-button (click)="onLogout()" *ngIf="loginService.role">Logout</button>
+  </mat-toolbar>
+</header>
+ <body class="background">
+<router-outlet></router-outlet>
+</body> 

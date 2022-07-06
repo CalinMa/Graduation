@@ -1,0 +1,41 @@
+
+<form [formGroup]="timeTrackingForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+            <mat-error *ngIf="name?.invalid">Need at least {{name?.errors?.['minlength']?.requiredLength}} characters.
+            </mat-error>
+
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <textarea matInput formControlName="date"></textarea>
+            <mat-error *ngIf="description?.invalid">Date is required.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+            <mat-error *ngIf="description?.invalid">Description is required.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Hours</mat-label>
+            <textarea matInput formControlName="hours"></textarea>
+            <mat-error *ngIf="description?.invalid">Hours are required.</mat-error>
+        </mat-form-field>
+
+        
+
+        <!--   // Cu titlu de exemplu vizual pentru cerinta de bonus din saptamana 5 - NU este functional.
+ -->
+        <!-- <mat-form-field appearance="fill" *ngFor="let num of nums">
+            <mat-label>Subactivitate {{num}}:</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+            <button mat-raised-button (click)="deleteSubactivity(num)">Remove</button>
+        </mat-form-field> -->
+        <span>
+        <button mat-raised-button color="primary" type="submit" [disabled]="timeTrackingForm?.invalid">Add</button>
+        <button mat-raised-button color="primary" [routerLink]="['/time-tracking']">Back to list</button>
+          </span>
+    </div>
+</form>

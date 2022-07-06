@@ -1,0 +1,80 @@
+<mat-card class="main-card">
+    <mat-card-title>{{details}} Details</mat-card-title>
+    
+    <mat-card-content>   
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 todo-table">
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field *ngIf="isEditing; else notEditing" appearance="fill" >
+          <input matInput formControlName="description" [(ngModel)]="element.description">
+        </mat-form-field>
+        <ng-template #notEditing>
+          {{element.description}}
+         </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hours">
+      <th mat-header-cell *matHeaderCellDef>Hours</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field *ngIf="isEditing; else notEditing" appearance="fill" >
+          <input matInput formControlName="hours" [(ngModel)]="element.hours">
+        </mat-form-field>
+        <ng-template #notEditing>
+          {{element.hours}}
+         </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="level" >
+      <th mat-header-cell *matHeaderCellDef>Level</th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{'color': (element.level === 'low') ? 'green' : (element.level === 'medium') ? 'orange' : (element.level === 'high') ? 'red' : ''}" >
+        <mat-form-field *ngIf="isEditing; else notEditing" appearance="fill">
+          <input matInput formControlName="level" [(ngModel)]="element.level">
+        </mat-form-field>
+        <ng-template #notEditing>
+          {{element.level}}
+         </ng-template>
+   
+      </td>
+    
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+  </table>
+
+  <div *ngIf="openAddSubItem" style="text-align: center;">
+  <form [formGroup]="addSubActivityForm" (ngSubmit)="onSubmit()">
+  <mat-form-field  appearance="fill" >
+    <input matInput formControlName="description" placeholder="description">
+    <mat-error *ngIf="description?.invalid">Description is required.</mat-error>
+  </mat-form-field>
+  <mat-form-field  appearance="fill" style="width: 40px;">
+    <input matInput formControlName="hours" placeholder="h" size="1">
+    <mat-error *ngIf="hours?.invalid">Hours</mat-error>
+  </mat-form-field>
+  <!-- <mat-form-field  appearance="fill" style="width: 50px;">
+    <input matInput formControlName="level" placeholder="level">
+  </mat-form-field> -->
+  <mat-form-field appearance="fill" style="width: 90px;">
+    
+    <mat-select  placeholder="level"  formControlName="level">
+      <mat-option value="low">Low</mat-option>
+      <mat-option value="medium">Medium</mat-option>
+      <mat-option value="high">High</mat-option>
+    </mat-select>
+    <mat-error *ngIf="level?.invalid">Select level</mat-error>
+  </mat-form-field>
+  
+  <button mat-raised-button color="primary" type="submit">Add</button>
+
+</form>
+</div>
+  <div style="text-align: center; padding: 10px;" >
+    <button mat-raised-button (click)="closeDialog()">Close</button>
+    <button *ngIf="!openAddSubItem" mat-raised-button color="primary" (click)="showAddNewSubactivity()">Add new subactivity</button>
+  </div>
+</mat-card-content>

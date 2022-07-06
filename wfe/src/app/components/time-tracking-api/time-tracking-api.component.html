@@ -1,0 +1,124 @@
+
+<mat-card class="main-card">
+
+    <mat-card-content>   
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 todo-table">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Activity</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill" >
+          <input matInput name="name" [(ngModel)]="element.name">
+        </mat-form-field>
+        <ng-template #notEditing>
+          {{element.name}}
+         </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill" >
+          <input matInput name="description" [(ngModel)]="element.description">
+        </mat-form-field>
+        <ng-template #notEditing>
+          {{element.description}}
+         </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hours">
+      <th mat-header-cell *matHeaderCellDef>Hours</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill" >
+          <input matInput name="hours" [(ngModel)]="element.hours">
+        </mat-form-field>
+        <ng-template #notEditing>
+          {{element.hours}}
+         </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill" >
+          <input matInput name="hours" [(ngModel)]="element.date">
+        </mat-form-field>
+        <ng-template #notEditing>
+          {{element.date}}
+         </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="operations">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let element">
+
+          <div class="operations-div" *ngIf="!element.preparingDelete && !element.isEditing">
+              <mat-icon (click)="element.preparingDelete = true" class="todo-icon-operation">
+                  delete
+              </mat-icon>
+              <mat-icon  class="todo-icon-operation" [routerLink]="['/time-tracking/edit', element.id]">
+                  edit
+              </mat-icon>
+            
+              <button mat-raised-button color="primary" style="margin: 5px;" (click)="openDialog(element)"> Details</button>
+              <button mat-raised-button   color="basic" style="margin: 5px;" (click)="changeChart(element)"> Chart</button>
+          </div>
+          <div *ngIf="element.preparingDelete" class="operations-div">
+              Are you sure?
+              <button mat-icon-button (click)="deleteTimeTracking(element)">
+                  <mat-icon>check</mat-icon>
+              </button>
+              <button mat-icon-button (click)="element.preparingDelete = false">
+                  <mat-icon>cancel</mat-icon>
+              </button>
+          </div>
+      </td>
+  </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <br/>
+  <span class="specialCenter"><button mat-raised-button color="primary" (click)="filterTimeTracking(filtrTimeTracking)">Filter</button> 
+    <mat-form-field class="filterDate" >
+      <mat-label>Date</mat-label>
+      <input matInput placeholder="Ex. running" name="date" [(ngModel)]="filtrTimeTracking.date">
+    </mat-form-field>
+    <mat-form-field class="filterHours" >
+      <mat-label>Hours</mat-label>
+      <input matInput placeholder="Ex. running" name="hours" [(ngModel)]="filtrTimeTracking.hours">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sort Hours</mat-label>
+    
+      <mat-select [(value)]="hoursOrder" (selectionChange)="onOrderHoursSelected($event.value)" placeholder="Mode">
+        <mat-option value="none">None</mat-option>
+        <mat-option value="asc">Ascending</mat-option>
+        <mat-option value="desc">Descending</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="reset()">Reset</button></span>
+</mat-card-content>
+
+
+      <button mat-raised-button color="primary" style="text-decoration: none" [routerLink]="['/time-tracking/add']">Add activity</button>
+
+</mat-card>
+
+
+<div class="pieChart">
+  <canvas mdbChart
+    [chartType]="chartType"
+    [datasets]="chartDatasets"
+    [labels]="chartLabels"
+    [colors]="chartColors"
+    [options]="chartOptions"
+    [legend]="true"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+  </canvas>
+</div>
+

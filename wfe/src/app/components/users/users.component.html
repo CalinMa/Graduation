@@ -1,0 +1,103 @@
+<mat-progress-spinner></mat-progress-spinner>
+<div class="container" style="padding: 16px">
+    <h2>Users:</h2>
+    <a mat-flat-button color="primary" href="/register" target="_self">Add a new user</a>
+    <table mat-table [dataSource]="data" style="width: 100%" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill">
+            <input matInput name="name" [(ngModel)]="element.name">
+          </mat-form-field>
+          <ng-template #notEditing>
+            {{element.name}}
+          </ng-template>
+        </td>
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef> Username </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill">
+              <input matInput name="userName" [(ngModel)]="element.userName">
+            </mat-form-field>
+            <ng-template #notEditing>
+              {{element.userName}}
+            </ng-template>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill">
+              <input matInput name="firstName" [(ngModel)]="element.firstName">
+            </mat-form-field>
+            <ng-template #notEditing>
+              {{element.firstName}}
+            </ng-template>
+          </td>
+        </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill">
+                <input matInput name="email" [(ngModel)]="element.email">
+              </mat-form-field>
+              <ng-template #notEditing>
+                {{element.email}}
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef> Role </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field *ngIf="element.isEditing; else notEditing" appearance="fill">
+                  <mat-select name="roleId" [(ngModel)]="element.role.id" placeholder="Role">
+                    <mat-option [value]="1">USER</mat-option>
+                    <mat-option [value]="2">ADMIN</mat-option>
+                    <mat-option [value]="3">SUPERADMIN</mat-option>
+                  </mat-select>
+              </mat-form-field>
+              <ng-template #notEditing>
+                {{element.role.roleName}}
+              </ng-template>
+            </td>
+          </ng-container>
+            <ng-container matColumnDef="operations">
+              <th mat-header-cell *matHeaderCellDef>Operations</th>
+              <td mat-cell *matCellDef="let element">
+
+                <div class="operations-div" *ngIf="!element.preparingDelete && !element.isEditing">
+                  <mat-icon (click)="element.preparingDelete = true" class="todo-icon-operation"
+                    *ngIf="element.role.id == '1' || (element.role.id == '2' && isSuperAdmin)" aria-disabled="true">
+                    delete
+                  </mat-icon>
+                  <mat-icon (click)="element.isEditing = true" class="todo-icon-operation"
+                  *ngIf="element.role.id == '1' || (element.role.id == '2' && isSuperAdmin)" aria-disabled="true">
+                    edit
+                  </mat-icon>
+                </div>
+                <div *ngIf="element.preparingDelete" class="operations-div">
+                  Are you sure?
+                  <button mat-icon-button (click)="deleteUserItem(element)">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="element.preparingDelete = false">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="element.isEditing" class="operations-div">
+                  Are you done?
+                  <button mat-icon-button (click)="updateUserItem(element)">
+                    <mat-icon>check</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="element.isEditing = false">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </ng-container>
+    </table>
+</div>
+
